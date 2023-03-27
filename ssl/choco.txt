@@ -1,0 +1,33 @@
+With PowerShell, you must ensure Get-ExecutionPolicy is not Restricted. We suggest using Bypass to bypass the policy to get things installed or AllSigned for quite a bit more security.
+
+Run Get-ExecutionPolicy. If it returns Restricted, then run Set-ExecutionPolicy AllSigned or Set-ExecutionPolicy Bypass -Scope Process.
+Now run the following command:
+
+>
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+Paste the copied text into your shell and press Enter. 
+After installing Chocolately 
+
+choco install mkcert
+mkcert -install
+mkcert localhost
+
+The certificate is at "./localhost.pem" and the key at "./localhost-key.pem"
+
+inside the angular.json in serve section, below the builder provide options
+
+ "sslKey": "ssl/localhost.key",
+"sslCert": "ssl/localhost-key.pem",
+
+or
+
+"serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "MyApp:build",
+            //"sslKey": "ssl/server.key",
+            //"sslCert": "ssl/server.crt",
+            "sslCert": "ssl/localhost.pem",
+            "sslKey": "ssl/localhost-key.pem",
+            "ssl": true
+          },
